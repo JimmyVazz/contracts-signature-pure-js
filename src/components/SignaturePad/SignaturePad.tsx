@@ -4,12 +4,13 @@ import "./SignaturePad.css"; // Archivo CSS separado
 interface SignaturePadProps {
   signer: string;
   onSave: (signatureBase64: string) => void;
+  isSigned: boolean;
+  onClear: () => void;
 }
 
-const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
+const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave, isSigned, onClear }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
-  const [isSigned, setIsSigned] = useState<boolean>(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,6 +27,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
   }, []);
 
   const startDrawing = (event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>) => {
+    if (isSigned) return; // Evita dibujar si ya se firmó
     event.preventDefault();
     setIsDrawing(true);
     const { offsetX, offsetY } = getEventCoordinates(event);
@@ -35,7 +37,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
   };
 
   const draw = (event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>) => {
-    if (!isDrawing) return;
+    if (!isDrawing || isSigned) return;
     event.preventDefault();
     const { offsetX, offsetY } = getEventCoordinates(event);
     const ctx = canvasRef.current?.getContext("2d");
@@ -50,12 +52,12 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-    ctx?.clearRect(0, 0, canvas!.width, canvas!.height);
     if (ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
-    ctx?.fillRect(0, 0, canvas!.width, canvas!.height);
-    setIsSigned(false);
+    onClear(); // Llamamos a la función para resetear isSigned en PrivacyNotice
   };
 
   const saveSignature = () => {
@@ -63,7 +65,6 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
     if (canvas) {
       const imageBase64 = canvas.toDataURL("image/png");
       onSave(imageBase64);
-      setIsSigned(true);
     }
   };
 
@@ -92,11 +93,11 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
         onTouchMove={draw}
         onTouchEnd={stopDrawing}
         style={{
-          pointerEvents: isSigned || signer === '' ? "none" : "auto",
+          pointerEvents: isSigned ? "none" : "auto",
         }}
       />
       <div className="button-group">
-        <button onClick={clearCanvas} className="clear-button" disabled={isSigned || signer === ''}>
+        <button onClick={clearCanvas} className="clear-button" disabled={!isSigned}>
           Corregir
         </button>
         <button onClick={saveSignature} className="save-button" disabled={isSigned || signer === ''}>

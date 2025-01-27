@@ -13,14 +13,18 @@ const PrivacyNotice: React.FC<PrivacyNoticeProps> = () => {
       alert('Por favor, ingrese su nombre antes de firmar.');
       return;
     }
-    console.log("FIRMADO: ", signatureBase64);
     setIsSigned(true);
+    console.log("FIRMADO: ", signatureBase64);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (!isSigned) {
       setName(e.target.value);
     }
+  };
+
+  const handleClear = () => {
+    setIsSigned(false);
   };
 
   return (
@@ -53,16 +57,13 @@ const PrivacyNotice: React.FC<PrivacyNoticeProps> = () => {
 
         {/* Componente de firma */}
         <div className="signature-container">
-          <SignaturePad onSave={handleSignatureChange} signer={name} />
+          <SignaturePad 
+            onSave={handleSignatureChange} 
+            signer={name} 
+            isSigned={isSigned} 
+            onClear={handleClear} 
+          />
         </div>
-
-        <button
-          onClick={() => {}}
-          className="submit-button"
-          disabled={isSigned || name === ''}
-        >
-          Guardar Firma
-        </button>
       </div>
     </div>
   );
