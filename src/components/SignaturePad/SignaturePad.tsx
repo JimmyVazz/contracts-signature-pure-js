@@ -21,7 +21,9 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave, isSigned, o
         ctx.lineCap = "round";
         ctx.strokeStyle = "black";
         ctx.fillStyle = "white";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (canvas) {
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
       }
     }
   }, []);
@@ -51,14 +53,17 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave, isSigned, o
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (ctx) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
     }
     onClear(); // Llamamos a la función para resetear isSigned en PrivacyNotice
   };
+  
 
   const saveSignature = () => {
     const canvas = canvasRef.current;
