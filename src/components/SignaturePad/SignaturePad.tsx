@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, MouseEvent, TouchEvent } from "react";
+import "./SignaturePad.css"; // Archivo CSS separado
 
 interface SignaturePadProps {
   signer: string;
@@ -8,7 +9,7 @@ interface SignaturePadProps {
 const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
-  const [isSigned, setIsSigned] = useState<boolean>(false); 
+  const [isSigned, setIsSigned] = useState<boolean>(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -79,12 +80,10 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
   };
 
   return (
-    <div className="flex flex-col items-center p-6 space-y-4">
+    <div className="signature-pad">
       <canvas
         ref={canvasRef}
-        width={400}
-        height={200}
-        className="border-2 border-gray-400 bg-white"
+        className="signature-canvas"
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
@@ -96,26 +95,16 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave }) => {
           pointerEvents: isSigned || signer === '' ? "none" : "auto",
         }}
       />
-      <div className="space-x-4">
-        <button
-          onClick={clearCanvas}
-          className="px-6 py-3 bg-red-500 text-white rounded-md w-full"
-          disabled={isSigned || signer === ''}
-        >
+      <div className="button-group">
+        <button onClick={clearCanvas} className="clear-button" disabled={isSigned || signer === ''}>
           Corregir
         </button>
-        <button
-          onClick={saveSignature}
-          className="px-6 py-3 bg-green-500 text-white rounded-md w-full"
-          disabled={isSigned || signer === ''}
-        >
+        <button onClick={saveSignature} className="save-button" disabled={isSigned || signer === ''}>
           Guardar
         </button>
       </div>
 
-      {isSigned && (
-        <div className="mt-4 text-green-500 font-bold">¡Firmado por {signer}!</div>
-      )}
+      {isSigned && <div className="signed-message">¡Firmado por {signer}!</div>}
     </div>
   );
 };

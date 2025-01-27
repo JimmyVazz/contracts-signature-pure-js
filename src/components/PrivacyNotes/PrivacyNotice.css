@@ -1,0 +1,138 @@
+/* Estilos generales */
+.privacy-notice {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background: black;
+  color: white;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+/* Título y descripción */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+}
+
+/* Contenedor del formulario */
+.form-container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #444;
+  background: #222;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Título del formulario */
+.form-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 10px;
+}
+
+/* Grupo de entrada */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #666;
+  background: #333;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Contenedor de la firma */
+.signature-container {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  overflow: hidden;
+  aspect-ratio: 2 / 1;
+  background: white;
+}
+
+/* Botón */
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 15px;
+}
+
+.submit-button:hover {
+  background: #0056b3;
+}
+
+.submit-button:disabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .privacy-notice {
+    padding: 15px;
+  }
+
+  .form-container {
+    padding: 15px;
+  }
+
+  .signature-container {
+    max-width: 100%;
+  }
+
+  .submit-button {
+    font-size: 14px;
+  }
+}

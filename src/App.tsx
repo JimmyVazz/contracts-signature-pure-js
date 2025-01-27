@@ -1,5 +1,5 @@
 import './App.css'
-import PrivacyNotice from './components/PrivacyNotice'
+import PrivacyNotice from './components/PrivacyNotes/PrivacyNotice'
 
 function App() {
   return (
