@@ -37,20 +37,16 @@ const PrivacyNotice: React.FC<PrivacyNoticeProps> = () => {
         />
       </div>
 
-      <h2 className="title">Contrato de confidencialidad de la información, reglamento y lineamientos para el alumno</h2>
-      <p className="description">Aquí va el contenido del contrato...</p>
-
+      <h2 className="title">Firma de enterado</h2>
       <div className="form-container">
-        <p className="form-title">Por favor, ingrese su nombre y firme:</p>
-
         <div className="input-group">
-          <label htmlFor="name">Nombre:</label>
+          <label htmlFor="name">Nombre y apellidos:</label>
           <input
             type="text"
             id="name"
             value={name}
             onChange={handleNameChange}
-            placeholder="Ingrese su nombre"
+            placeholder="Ejemplo: Rene Figueroa Ramirez"
             disabled={isSigned}
           />
         </div>

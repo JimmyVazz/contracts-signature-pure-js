@@ -98,11 +98,11 @@ const SignaturePad: React.FC<SignaturePadProps> = ({ signer, onSave, isSigned, o
         onTouchMove={draw}
         onTouchEnd={stopDrawing}
         style={{
-          pointerEvents: isSigned ? "none" : "auto",
+          pointerEvents: isSigned || signer === "" ? "none" : "auto",
         }}
       />
       <div className="button-group">
-        <button onClick={clearCanvas} className="clear-button" disabled={!isSigned}>
+        <button onClick={clearCanvas} className="clear-button" disabled={isSigned}>
           Corregir
         </button>
         <button onClick={saveSignature} className="save-button" disabled={isSigned || signer === ''}>
